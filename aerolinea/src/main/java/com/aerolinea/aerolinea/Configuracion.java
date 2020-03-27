@@ -21,13 +21,13 @@ public class Configuracion {
 		MessageDispatcherServlet servlet = new MessageDispatcherServlet();
 		servlet.setApplicationContext(applicationContext);
 		servlet.setTransformWsdlLocations(true);
-		return new ServletRegistrationBean(servlet, "/ws/*");
+		return new ServletRegistrationBean(servlet, "/*");
 	}
 	@Bean(name = "aerolinea")
 	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema aerolineaSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
 		wsdl11Definition.setPortTypeName("aerolineaPort");
-		wsdl11Definition.setLocationUri("/ws/aerolinea");
+		wsdl11Definition.setLocationUri("/aerolinea");
 		wsdl11Definition.setTargetNamespace("http://www.example.org/aerolinea");
 		wsdl11Definition.setSchema(aerolineaSchema);
 		return wsdl11Definition;
