@@ -19,8 +19,10 @@
 							<xs:element name="origin" type="xs:string" />
 							<xs:element name="destination" type="xs:string" />
 							<xs:element name="date" type="xs:string" />
-							<xs:element name="price" type="xs:float" />
 							<xs:element name="time" type="xs:string" />
+							<xs:element name="price" type="xs:float" />
+							<xs:element name="alert" type="xs:string" />
+							
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -31,23 +33,32 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="AsientosResponse">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="idAsiento" type="xs:string" />
-							<xs:element name="asientosDisponibles" type="xs:int" />
+				<xs:element name="AsientosResponse" >
+					<xs:complexType >
+						<xs:sequence >
+						
+							<xs:element name="idAsiento" type="xs:string" maxOccurs="unbounded"/>
+							<xs:element name="status" type="xs:string" maxOccurs="unbounded"/>
+							<xs:element name="alert" type="xs:string" maxOccurs="unbounded"/>
+					
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				
 				<xs:element name="CompraRequest">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="idVuelo" type="xs:int" />
 							<xs:element name="idAsiento" type="xs:string" />
 							<xs:element name="nameClient" type="xs:string" />
+							<xs:element name="edadClient" type="xs:int" />
+							<xs:element name="phoneClient" type="xs:double" />
+							<xs:element name="emailClient" type="xs:string" />
+							
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				
 				<xs:element name="CompraResponse">
 					<xs:complexType>
 						<xs:sequence>
@@ -55,10 +66,14 @@
 							<xs:element name="origin" type="xs:string" />
 							<xs:element name="destination" type="xs:string" />
 							<xs:element name="date" type="xs:string" />
+							<xs:element name="time" type="xs:string" />
 							<xs:element name="noTicket" type="xs:int" />
+							<xs:element name="noVuelo" type="xs:int" />
+							<xs:element name="alert" type="xs:string" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				
 				<xs:element name="CancelCompraRequest">
 					<xs:complexType>
 						<xs:sequence>
@@ -67,6 +82,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				
 				<xs:element name="CancelCompraResponse">
 					<xs:complexType>
 						<xs:sequence>
@@ -75,6 +91,31 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				
+				<xs:element name="ConsultarCompraRequest">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="noTicket" type="xs:int" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="ConsultarCompraResponse">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="alert" type="xs:string" />
+							<xs:element name="status" type="xs:boolean" />
+							<xs:element name="origin" type="xs:string" />
+							<xs:element name="destination" type="xs:string" />
+							<xs:element name="date" type="xs:string" />
+							<xs:element name="time" type="xs:string" />
+							<xs:element name="noTicket" type="xs:int" />
+							<xs:element name="noVuelo" type="xs:int" />
+							
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
 				
 	 
 </xs:schema>

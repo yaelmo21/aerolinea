@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="idVuelo" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="noTicket" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "idVuelo"
+    "noTicket"
 })
-@XmlRootElement(name = "AsientosRequest")
-public class AsientosRequest {
+@XmlRootElement(name = "ConsultarCompraRequest")
+public class ConsultarCompraRequest {
 
-    protected int idVuelo;
+    protected int noTicket;
 
     /**
-     * Obtiene el valor de la propiedad idVuelo.
+     * Obtiene el valor de la propiedad noTicket.
      * 
      */
-    public int getIdVuelo() {
-        return idVuelo;
+    public int getNoTicket() {
+        return noTicket;
     }
 
     /**
-     * Define el valor de la propiedad idVuelo.
+     * Define el valor de la propiedad noTicket.
      * 
      */
-    public void setIdVuelo(int value) {
-        this.idVuelo = value;
+    public void setNoTicket(int value) {
+        this.noTicket = value;
     }
 
 }

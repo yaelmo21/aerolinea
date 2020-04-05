@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.03.25 a las 04:34:36 PM CST 
+// Generado el: 2020.04.04 a las 05:01:17 PM CST 
 //
 
 
@@ -29,8 +29,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="origin" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="destination" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}float"/>
  *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}float"/>
+ *         &lt;element name="alert" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,8 +46,9 @@ import javax.xml.bind.annotation.XmlType;
     "origin",
     "destination",
     "date",
+    "time",
     "price",
-    "time"
+    "alert"
 })
 @XmlRootElement(name = "VuelosResponse")
 public class VuelosResponse {
@@ -58,9 +60,11 @@ public class VuelosResponse {
     protected String destination;
     @XmlElement(required = true)
     protected String date;
-    protected float price;
     @XmlElement(required = true)
     protected String time;
+    protected float price;
+    @XmlElement(required = true)
+    protected String alert;
 
     /**
      * Obtiene el valor de la propiedad idVuelo.
@@ -151,22 +155,6 @@ public class VuelosResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad price.
-     * 
-     */
-    public float getPrice() {
-        return price;
-    }
-
-    /**
-     * Define el valor de la propiedad price.
-     * 
-     */
-    public void setPrice(float value) {
-        this.price = value;
-    }
-
-    /**
      * Obtiene el valor de la propiedad time.
      * 
      * @return
@@ -188,6 +176,46 @@ public class VuelosResponse {
      */
     public void setTime(String value) {
         this.time = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad price.
+     * 
+     */
+    public float getPrice() {
+        return price;
+    }
+
+    /**
+     * Define el valor de la propiedad price.
+     * 
+     */
+    public void setPrice(float value) {
+        this.price = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad alert.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAlert() {
+        return alert;
+    }
+
+    /**
+     * Define el valor de la propiedad alert.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAlert(String value) {
+        this.alert = value;
     }
 
 }

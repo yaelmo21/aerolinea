@@ -33,6 +33,20 @@ Datos que se regresan:
 | `time` | **String** Hora de salida|
 | `Price` | **Float** Costo del vuelo|
 
+```
+**Ejemplo de petición**
+
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+	<Body>
+		<VuelosRequest xmlns="http://www.example.org/aerolinea">
+			<origin>Monterrey</origin>
+			<destination>Ciudad de México</destination>
+			<date>2020-04-15</date>
+		</VuelosRequest>
+	</Body>
+</Envelope>
+
+```
 
 **Asientos**: Número y ID`s de los asientos disponibles en determinado vuelo.
 
@@ -40,7 +54,7 @@ Datos que recibe:
 
 | Parametros | Descripción |
 | --- | --- |
-| `idVuelo` | **String** Ciudad de origen|
+| `idVuelo` | **Int** identificador del vuelo |
 
 Datos que se regresan:
 
@@ -50,6 +64,19 @@ Datos que se regresan:
 | `asientosDisponibles` | **Int** Número total de asientos disponibles|
 
 
+```
+**Ejemplo de petición**
+
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+	<Body>
+		<AsientosRequest xmlns="http://www.example.org/aerolinea">
+			<idVuelo>1</idVuelo>
+		</AsientosRequest>
+	</Body>
+</Envelope>
+
+```
+
 **Compra**: Solicita la compra de un boleto en determinado vuelo con un asiento disponible
 
 Datos que recibe: 
@@ -58,7 +85,10 @@ Datos que recibe:
 | --- | --- |
 | `idVuelo` | **Int** Número unico de vuelo|
 | `idAsiento` | **String** Número unico de asiento|
-| `nameClient` | **String** Nombre de la persona quien viajara|
+| `nameClient` | **String** Nombre de la persona quien viajará|
+| `edadClient` | **Int** Edad de la persona que viajrá|
+| `phoneClient` | **Double** Número de teléfono de la persona que viajrá|
+| `emailClient` | **String** Correo electrónico de la persona que viajrá|
 
 Datos que se regresan:
 
@@ -68,8 +98,29 @@ Datos que se regresan:
 | `origin` | **String** Ciudad de origen|
 | `destination` | **String** Ciudad de destino|
 | `date` | **String** Fecha de salida *YYYY-MM-DD* |
+| `time` | **String** Hora de salida *HH:MM* |
 | `noTicket` | **Int** Número unico de compra |
+| `noVuelo` | **Int** Identificador de vuelo |
+| `alert` |  **String** Mensaje de error |
 
+
+```
+**Ejemplo de petición**
+
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+	<Body>
+		<CompraRequest xmlns="http://www.example.org/aerolinea">
+			<idVuelo>1</idVuelo>
+			<idAsiento>A01</idAsiento>
+			<nameClient>GUILLERMO SALVATIERRA MALLO</nameClient>
+			<edadClient>20</edadClient>
+			<phoneClient>2298765400</phoneClient>
+			<emailClient>correo@correo.com</emailClient>
+		</CompraRequest>
+	</Body>
+</Envelope>
+
+```
 
 **Cancelar Compra**: Si la compra se ha completado con éxito, es posible solicitar una cancelación
 
@@ -87,4 +138,52 @@ Datos que se regresan:
 | `status` | **Boolean** Estado de la transacción|
 | `menssage` | **String** Descripción del estado de la transacción|
 
+```
+**Ejemplo de petición**
+
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+    <Body>
+        <CancelCompraRequest xmlns="http://www.example.org/aerolinea">
+            <noTicket>6</noTicket>
+            <description>Motivo</description>
+        </CancelCompraRequest>
+    </Body>
+</Envelope>
+
+```
+
+**Consultar Compra**: Muestra los datos de una compra 
+
+Datos que recibe: 
+
+| Parametros | Descripción |
+| --- | --- |
+| `noTicket` | **Int** Número unico de compra |
+
+Datos que se regresan:
+
+| Parametros | Descripción |
+| --- | --- |
+| `status` | **Boolean** Estado de la transacción|
+| `origin` | **String** Ciudad de origen|
+| `destination` | **String** Ciudad de destino|
+| `date` | **String** Fecha de salida *YYYY-MM-DD* |
+| `time` | **String** Hora de salida *HH:MM* |
+| `noTicket` | **Int** Número unico de compra |
+| `noVuelo` | **Int** Identificador de vuelo |
+| `alert` |  **String** Mensaje de error |
+
+```
+**Ejemplo de petición**
+
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+	<Body>
+		<ConsultarCompraRequest xmlns="http://www.example.org/aerolinea">
+			<noTicket>3</noTicket>
+		</ConsultarCompraRequest>
+	</Body>
+</Envelope>
+
+
+```
 

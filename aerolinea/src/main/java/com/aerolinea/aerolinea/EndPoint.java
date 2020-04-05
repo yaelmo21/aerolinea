@@ -1,17 +1,34 @@
 package com.aerolinea.aerolinea;
 
+import java.awt.List;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.example.aerolinea.AsientosRequest;
 import org.example.aerolinea.AsientosResponse;
 import org.example.aerolinea.CancelCompraRequest;
 import org.example.aerolinea.CancelCompraResponse;
 import org.example.aerolinea.CompraRequest;
 import org.example.aerolinea.CompraResponse;
+import org.example.aerolinea.ConsultarCompraRequest;
+import org.example.aerolinea.ConsultarCompraResponse;
 import org.example.aerolinea.VuelosRequest;
 import org.example.aerolinea.VuelosResponse;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+
+import Controlador.AsientosSql;
+import Controlador.CompraSql;
+import Controlador.VuelosSql;
+import Pojo.Asiento;
+import Pojo.Compra;
+import Pojo.Vuelo;
+import databse.AwsConnect;
 
 @Endpoint
 public class EndPoint {
@@ -21,12 +38,27 @@ public class EndPoint {
 	
 	public VuelosResponse getVuelos(@RequestPayload VuelosRequest peticion) {
 		VuelosResponse respuesta = new VuelosResponse();
-		respuesta.setIdVuelo(1245);
-		respuesta.setOrigin(peticion.getOrigin());
-		respuesta.setDestination(peticion.getDestination());
-		respuesta.setDate(peticion.getDate());
-		respuesta.setPrice(Float.parseFloat("500.10"));
-		respuesta.setTime("15:00");
+		VuelosSql peticionSql = new VuelosSql(peticion.getOrigin(),peticion.getDestination(),peticion.getDate());
+		ArrayList<Vuelo> lista = peticionSql.consultVuelos();
+		
+		if(lista.size() !=0) {
+			respuesta.setIdVuelo(lista.get(0).getNumero());
+			respuesta.setOrigin(lista.get(0).getOrigen());
+			respuesta.setDestination(lista.get(0).getDestino());
+			respuesta.setDate(String.valueOf(lista.get(0).getFecha()));
+			respuesta.setPrice(lista.get(0).getPrecio());
+			respuesta.setTime(String.valueOf(lista.get(0).getHora()));
+		}else {
+			respuesta.setIdVuelo(0);
+			respuesta.setOrigin("");
+			respuesta.setDestination("");
+			respuesta.setDate("");
+			respuesta.setPrice(0);
+			respuesta.setTime("");
+			respuesta.setAlert("No se han encontrado vuelos");
+		}
+		
+		
 		
 		
 		return respuesta;
@@ -36,11 +68,59 @@ public class EndPoint {
 	
 	@PayloadRoot(namespace="http://www.example.org/aerolinea", localPart="AsientosRequest")
 	@ResponsePayload
+	
 	public AsientosResponse getAsientos(@RequestPayload AsientosRequest peticion) {
 		
 		AsientosResponse respuesta = new AsientosResponse();
-		respuesta.setIdAsiento("A19");
-		respuesta.setAsientosDisponibles(1);
+		AsientosSql asientos = new AsientosSql(peticion.getIdVuelo());
+		ArrayList<Asiento> asientosVuelo = asientos.getAsientos();
+		
+		
+		if(asientosVuelo.size() != 0) {
+			
+			ArrayList<String>idAsientos = new ArrayList<String>();
+			ArrayList<String> status = new ArrayList<String>();
+			ArrayList<String>alerts = new ArrayList<String>();
+			
+			for(Asiento a:asientosVuelo) {
+				
+				idAsientos.add(a.getId());
+				alerts.add("");
+				if(a.isEstado()) {
+					status.add(a.getId()+"| Disponible");
+					
+				}else {
+					status.add(a.getId()+"| Ocupado");
+					
+					
+				}
+				
+				
+				
+				
+			}
+			
+			respuesta.setIdAsiento(idAsientos);
+			respuesta.setStatus(status);
+			respuesta.setAlert(alerts);
+			
+			
+			
+			
+		}else {
+			ArrayList<String>idAsientos = new ArrayList<String>();
+			ArrayList<String> status = new ArrayList<String>();
+			ArrayList<String>alerts = new ArrayList<String>();
+			idAsientos.add("");
+			status.add("");
+			alerts.add("No se han encontrado asientos");
+			respuesta.setIdAsiento(idAsientos);
+			respuesta.setStatus(status);
+			respuesta.setAlert(alerts);
+			
+			
+		}
+		
 		
 		return respuesta;
 		
@@ -51,11 +131,37 @@ public class EndPoint {
 	@ResponsePayload
 	public CompraResponse getCompra(@RequestPayload CompraRequest peticion) {
 		CompraResponse respuesta = new CompraResponse();
-			respuesta.setStatus(true);
-			respuesta.setOrigin("México City");
-			respuesta.setDestination("Monterrey Nuevo León");
-			respuesta.setDate("2020-03-25");
-			respuesta.setNoTicket(37478);
+		CompraSql buy = new CompraSql(peticion.getIdVuelo(),peticion.getIdAsiento(),peticion.getNameClient(),peticion.getEdadClient(),peticion.getPhoneClient(),peticion.getEmailClient());
+		if(buy.realizarCompra()) {
+			
+			VuelosSql sqlVul = new VuelosSql();
+			Vuelo vuel = sqlVul.getVuelo(peticion.getIdVuelo());
+			
+			if(vuel != null) {
+				respuesta.setStatus(true);
+				respuesta.setOrigin(vuel.getOrigen());
+				respuesta.setDestination(vuel.getDestino());
+				respuesta.setDate(String.valueOf(vuel.getFecha()));
+				respuesta.setTime(String.valueOf(vuel.getHora()));
+				respuesta.setNoTicket(buy.getNoTicket());
+				respuesta.setNoVuelo(peticion.getIdVuelo());
+				respuesta.setAlert("");
+				
+				}	
+			
+			
+			
+			
+		}else {
+			respuesta.setStatus(false);
+			respuesta.setOrigin("");
+			respuesta.setDestination("");
+			respuesta.setDate("");
+			respuesta.setNoTicket(0);
+			respuesta.setNoVuelo(0);
+			respuesta.setAlert("No  es posible realizar la compra");
+		}
+			
 		
 		return respuesta;
 	}
@@ -67,11 +173,51 @@ public class EndPoint {
 	public CancelCompraResponse getCancel(@RequestPayload  CancelCompraRequest peticion) {
 		
 		CancelCompraResponse respuesta = new CancelCompraResponse();
-		respuesta.setStatus(true);
-		respuesta.setMessage("Su compra ha sido cancelada");
+		CompraSql buy = new CompraSql(peticion.getNoTicket());
+		if(buy.cancelCompra()) {
+			respuesta.setStatus(true);
+			respuesta.setMessage("Su compra ha sido cancelada");
+			
+		}else {
+			respuesta.setStatus(false);
+			respuesta.setMessage("Error: Su compra NO ha sido cancelada");
+		}
+		
 		return respuesta;
 	}
 	
+	@PayloadRoot(namespace="http://www.example.org/aerolinea", localPart="ConsultarCompraRequest")
+	@ResponsePayload
 	
+	public ConsultarCompraResponse getCompraConsulta(@RequestPayload ConsultarCompraRequest peticion) {
+		ConsultarCompraResponse respuesta = new ConsultarCompraResponse();
+		CompraSql buySql = new CompraSql(peticion.getNoTicket());
+		Compra buy = buySql.getCompra();
+		VuelosSql vuel = new VuelosSql();
+		if(buy!=null) {
+			Vuelo v = vuel.getVuelo(buy.getNumeroVuelo());
+			respuesta.setAlert("");
+			respuesta.setStatus(buy.isEstatus());
+			respuesta.setOrigin(v.getOrigen());
+			respuesta.setDestination(v.getDestino());
+			respuesta.setDate(String.valueOf(v.getFecha()));
+			respuesta.setTime(String.valueOf(v.getHora()));
+			respuesta.setNoTicket(peticion.getNoTicket());
+			respuesta.setNoVuelo(v.getNumero());
+			
+		}else {
+			respuesta.setAlert("No se ha encontrado una ompra con ese número de ticket");
+			respuesta.setOrigin("");
+			respuesta.setDestination("");
+			respuesta.setDate("");
+			respuesta.setTime("");
+			respuesta.setNoTicket(0);
+			respuesta.setNoVuelo(0);
+		}
+	
+		
+		
+		return respuesta;
+	}
 
 }

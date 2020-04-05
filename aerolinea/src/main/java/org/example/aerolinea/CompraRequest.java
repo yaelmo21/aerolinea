@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.03.25 a las 04:34:36 PM CST 
+// Generado el: 2020.04.04 a las 05:01:17 PM CST 
 //
 
 
@@ -28,6 +28,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="idVuelo" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="idAsiento" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="nameClient" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="edadClient" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="phoneClient" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="emailClient" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,7 +43,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "idVuelo",
     "idAsiento",
-    "nameClient"
+    "nameClient",
+    "edadClient",
+    "phoneClient",
+    "emailClient"
 })
 @XmlRootElement(name = "CompraRequest")
 public class CompraRequest {
@@ -50,6 +56,10 @@ public class CompraRequest {
     protected String idAsiento;
     @XmlElement(required = true)
     protected String nameClient;
+    protected int edadClient;
+    protected double phoneClient;
+    @XmlElement(required = true)
+    protected String emailClient;
 
     /**
      * Obtiene el valor de la propiedad idVuelo.
@@ -113,6 +123,62 @@ public class CompraRequest {
      */
     public void setNameClient(String value) {
         this.nameClient = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad edadClient.
+     * 
+     */
+    public int getEdadClient() {
+        return edadClient;
+    }
+
+    /**
+     * Define el valor de la propiedad edadClient.
+     * 
+     */
+    public void setEdadClient(int value) {
+        this.edadClient = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad phoneClient.
+     * 
+     */
+    public double getPhoneClient() {
+        return phoneClient;
+    }
+
+    /**
+     * Define el valor de la propiedad phoneClient.
+     * 
+     */
+    public void setPhoneClient(double value) {
+        this.phoneClient = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad emailClient.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEmailClient() {
+        return emailClient;
+    }
+
+    /**
+     * Define el valor de la propiedad emailClient.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEmailClient(String value) {
+        this.emailClient = value;
     }
 
 }

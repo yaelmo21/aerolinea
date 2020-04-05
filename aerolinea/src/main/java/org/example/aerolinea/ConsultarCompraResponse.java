@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="alert" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="origin" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="destination" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -32,7 +33,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="noTicket" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="noVuelo" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="alert" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,18 +43,20 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "alert",
     "status",
     "origin",
     "destination",
     "date",
     "time",
     "noTicket",
-    "noVuelo",
-    "alert"
+    "noVuelo"
 })
-@XmlRootElement(name = "CompraResponse")
-public class CompraResponse {
+@XmlRootElement(name = "ConsultarCompraResponse")
+public class ConsultarCompraResponse {
 
+    @XmlElement(required = true)
+    protected String alert;
     protected boolean status;
     @XmlElement(required = true)
     protected String origin;
@@ -66,8 +68,30 @@ public class CompraResponse {
     protected String time;
     protected int noTicket;
     protected int noVuelo;
-    @XmlElement(required = true)
-    protected String alert;
+
+    /**
+     * Obtiene el valor de la propiedad alert.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAlert() {
+        return alert;
+    }
+
+    /**
+     * Define el valor de la propiedad alert.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAlert(String value) {
+        this.alert = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad status.
@@ -211,30 +235,6 @@ public class CompraResponse {
      */
     public void setNoVuelo(int value) {
         this.noVuelo = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad alert.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAlert() {
-        return alert;
-    }
-
-    /**
-     * Define el valor de la propiedad alert.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAlert(String value) {
-        this.alert = value;
     }
 
 }
