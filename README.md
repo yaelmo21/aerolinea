@@ -9,7 +9,7 @@ Es necesario que se cuente con una conexión a internet para consumir el servici
 
 ### API
 
-Peticiones soportadas por la API v1.0
+Peticiones soportadas por la API v2.0
 
 
 **Vuelos**: Conoce los vuelos que ofrece nuestra aerolínea.
@@ -33,8 +33,10 @@ Datos que se regresan:
 | `time` | **String** Hora de salida|
 | `Price` | **Float** Costo del vuelo|
 
-```
 **Ejemplo de petición**
+
+```
+
 
 <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
 	<Body>
@@ -63,9 +65,10 @@ Datos que se regresan:
 | `idAsiento` | **String** Número unico de asiento|
 | `asientosDisponibles` | **Int** Número total de asientos disponibles|
 
+**Ejemplo de petición**
 
 ```
-**Ejemplo de petición**
+
 
 <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
 	<Body>
@@ -103,9 +106,10 @@ Datos que se regresan:
 | `noVuelo` | **Int** Identificador de vuelo |
 | `alert` |  **String** Mensaje de error |
 
+**Ejemplo de petición**
 
 ```
-**Ejemplo de petición**
+
 
 <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
 	<Body>
@@ -138,8 +142,9 @@ Datos que se regresan:
 | `status` | **Boolean** Estado de la transacción|
 | `menssage` | **String** Descripción del estado de la transacción|
 
-```
 **Ejemplo de petición**
+
+```
 
 <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
     <Body>
@@ -173,8 +178,10 @@ Datos que se regresan:
 | `noVuelo` | **Int** Identificador de vuelo |
 | `alert` |  **String** Mensaje de error |
 
-```
 **Ejemplo de petición**
+
+```
+
 
 <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
 	<Body>
