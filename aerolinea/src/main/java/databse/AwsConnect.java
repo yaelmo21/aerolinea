@@ -15,8 +15,8 @@ public class AwsConnect {
 	private String hostname = "3.15.219.220";
 	private String port= "3306";
 	private String url = "jdbc:mysql://"+hostname+":"+port+"/"+database+"?useTimezone=true&serverTimezone=UTC";
-	private String username= "aerolinea";
-	private String password="gygkaM-hixtiw-bydru6";
+	private String username= "";
+	private String password="";
 	
 	
 	public Connection connectDatabase() {
