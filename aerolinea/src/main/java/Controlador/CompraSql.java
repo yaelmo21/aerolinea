@@ -87,11 +87,20 @@ public class CompraSql {
 	
 	public boolean cancelCompra() {
 		boolean resultado = false;
-		String sql = "UPDATE COMPRA SET ESTATUS=FALSE WHERE NUMERO_TICKET="+this.noTicket;
+		String sql = "SELECT NUMERO_TICKET FROM COMPRA WHERE NUMERO_TICKET="+this.noTicket;
+		
 		this.datbase = new AwsConnect();
+		
 		try {
-			this.datbase.connectDatabase().createStatement().execute(sql);
-			resultado = true;
+			ResultSet rs = this.datbase.connectDatabase().createStatement().executeQuery(sql);
+			
+			if(rs.next()) {
+				sql = "UPDATE COMPRA SET ESTATUS=FALSE WHERE NUMERO_TICKET="+this.noTicket;
+				this.datbase.connectDatabase().createStatement().execute(sql);
+				resultado = true;
+			}
+
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
