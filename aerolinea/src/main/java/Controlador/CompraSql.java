@@ -97,7 +97,6 @@ public class CompraSql {
 			if(rs.next()) {
 				sql = "UPDATE COMPRA SET ESTATUS=FALSE WHERE NUMERO_TICKET="+this.noTicket;
 				this.datbase.connectDatabase().createStatement().execute(sql);
-				
 				resultado = true;
 			}
 
