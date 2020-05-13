@@ -74,52 +74,26 @@ public class EndPoint {
 		AsientosResponse respuesta = new AsientosResponse();
 		AsientosSql asientos = new AsientosSql(peticion.getIdVuelo());
 		ArrayList<Asiento> asientosVuelo = asientos.getAsientos();
-		
+		ArrayList<AsientosResponse.Asiento> asientosRespuesta = new ArrayList<AsientosResponse.Asiento>();
 		
 		if(asientosVuelo.size() != 0) {
-			
-			ArrayList<String>idAsientos = new ArrayList<String>();
-			ArrayList<String> status = new ArrayList<String>();
-			ArrayList<String>alerts = new ArrayList<String>();
-			
-			for(Asiento a:asientosVuelo) {
-				
-				idAsientos.add(a.getId());
-				alerts.add("");
-				if(a.isEstado()) {
-					status.add(a.getId()+"| Disponible");
-					
+			for (Asiento asiento:asientosVuelo) {
+				AsientosResponse.Asiento temp = new AsientosResponse.Asiento();
+				temp.setId(asiento.getId());
+				if(asiento.isEstado()) {
+					temp.setStatus("Disponible");
 				}else {
-					status.add(a.getId()+"| Ocupado");
-					
-					
+					temp.setStatus("Ocupado");
 				}
 				
-				
-				
-				
+				asientosRespuesta.add(temp);
+				respuesta.setAsiento(asientosRespuesta);
 			}
-			
-			respuesta.setIdAsiento(idAsientos);
-			respuesta.setStatus(status);
-			respuesta.setAlert(alerts);
-			
-			
-			
-			
 		}else {
-			ArrayList<String>idAsientos = new ArrayList<String>();
-			ArrayList<String> status = new ArrayList<String>();
-			ArrayList<String>alerts = new ArrayList<String>();
-			idAsientos.add("");
-			status.add("");
-			alerts.add("No se han encontrado asientos");
-			respuesta.setIdAsiento(idAsientos);
-			respuesta.setStatus(status);
-			respuesta.setAlert(alerts);
-			
-			
+			respuesta.setAlert("No se han encontrado asientos");
+			respuesta.setAsiento(asientosRespuesta);
 		}
+		
 		
 		
 		return respuesta;
