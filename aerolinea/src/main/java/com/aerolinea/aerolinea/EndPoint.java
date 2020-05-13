@@ -56,6 +56,8 @@ public class EndPoint {
 			respuesta.setPrice(0);
 			respuesta.setTime("");
 			respuesta.setAlert("No se han encontrado vuelos");
+			
+			
 		}
 		
 		
