@@ -40,24 +40,28 @@ public class EndPoint {
 		VuelosResponse respuesta = new VuelosResponse();
 		VuelosSql peticionSql = new VuelosSql(peticion.getOrigin(),peticion.getDestination(),peticion.getDate());
 		ArrayList<Vuelo> lista = peticionSql.consultVuelos();
+		ArrayList<VuelosResponse.Vuelo> vuelos = new ArrayList<VuelosResponse.Vuelo>();
 		
 		if(lista.size() !=0) {
-			respuesta.setIdVuelo(lista.get(0).getNumero());
-			respuesta.setOrigin(lista.get(0).getOrigen());
-			respuesta.setDestination(lista.get(0).getDestino());
-			respuesta.setDate(String.valueOf(lista.get(0).getFecha()));
-			respuesta.setPrice(lista.get(0).getPrecio());
-			respuesta.setTime(String.valueOf(lista.get(0).getHora()));
+			
+			for (int i=0;i<lista.size();i++) {
+				VuelosResponse.Vuelo temp = new VuelosResponse.Vuelo();
+				Vuelo vueloTemp = lista.get(i);
+				temp.setIdVuelo(vueloTemp.getNumero());
+				temp.setOrigin(vueloTemp.getOrigen());
+				temp.setDestination(vueloTemp.getDestino());
+				temp.setDate(String.valueOf(vueloTemp.getFecha()));
+				temp.setPrice(vueloTemp.getPrecio());
+				temp.setTime(String.valueOf(vueloTemp.getHora()));
+				vuelos.add(temp);		
+			}
+			
+			respuesta.setVuelo(vuelos);
+			
+			
 		}else {
-			respuesta.setIdVuelo(0);
-			respuesta.setOrigin("");
-			respuesta.setDestination("");
-			respuesta.setDate("");
-			respuesta.setPrice(0);
-			respuesta.setTime("");
+	
 			respuesta.setAlert("No se han encontrado vuelos");
-			
-			
 		}
 		
 		

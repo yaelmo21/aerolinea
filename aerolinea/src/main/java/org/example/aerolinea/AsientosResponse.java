@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.05.13 a las 10:28:34 AM CDT 
+// Generado el: 2020.05.18 a las 10:11:02 PM CDT 
 //
 
 
@@ -83,18 +83,18 @@ public class AsientosResponse {
      * 
      * 
      */
+    
+    
     public List<AsientosResponse.Asiento> getAsiento() {
         if (asiento == null) {
             asiento = new ArrayList<AsientosResponse.Asiento>();
         }
         return this.asiento;
     }
-    
 
     public void setAsiento(List<AsientosResponse.Asiento> asiento) {
 		this.asiento = asiento;
 	}
-
 
 	/**
      * Obtiene el valor de la propiedad alert.

@@ -15,13 +15,21 @@
 				<xs:element name="VuelosResponse">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="idVuelo" type="xs:int" />
-							<xs:element name="origin" type="xs:string" />
-							<xs:element name="destination" type="xs:string" />
-							<xs:element name="date" type="xs:string" />
-							<xs:element name="time" type="xs:string" />
-							<xs:element name="price" type="xs:float" />
-							<xs:element name="alert" type="xs:string" />
+						
+						<xs:element name="vuelo" maxOccurs="unbounded">
+					    <xs:complexType>
+					      <xs:sequence>
+					       <xs:element name="idVuelo" type="xs:int" />
+					        <xs:element name="origin" type="xs:string" />
+					        <xs:element name="destination" type="xs:string" />
+					        <xs:element name="date" type="xs:string" />
+					        <xs:element name="time" type="xs:string" />
+					        <xs:element name="price" type="xs:float" />
+					      </xs:sequence>
+					    </xs:complexType>
+					  </xs:element>
+
+						<xs:element name="alert" type="xs:string" />
 							
 						</xs:sequence>
 					</xs:complexType>
