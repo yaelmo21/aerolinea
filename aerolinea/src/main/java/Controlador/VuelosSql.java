@@ -1,5 +1,8 @@
 package Controlador;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +14,7 @@ import com.sun.el.parser.ParseException;
 
 import Pojo.Vuelo;
 import databse.AwsConnect;
+import utils.StripAccents;
 
 public class VuelosSql {
 	
@@ -36,6 +40,7 @@ public class VuelosSql {
 		
 		ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>(); 
 		ArrayList<Vuelo> vuelosAceptados = new ArrayList<Vuelo>(); 
+		StripAccents sA = new StripAccents();
 		
 		this.datbase = new AwsConnect();
 		
@@ -50,13 +55,22 @@ public class VuelosSql {
 			e.printStackTrace();
 		}
 		
-		for(Vuelo v:vuelos) {
-			String auxOrigen = v.getOrigen();
-			String auxDestino = v.getDestino();
+		for(Vuelo v:vuelos) {	
+			String auxOrigen = sA.stripAccents(v.getOrigen());
+			String auxDestino = sA.stripAccents(v.getDestino());
 			if((auxOrigen.indexOf(this.origen)!= -1)&&(auxDestino.indexOf(this.destino)!= -1)){
+				String utf8Origen = "";
+				String utf8Destino = "";
+				try {
+					utf8Origen = new String(v.getOrigen().getBytes("UTF-8"), "ISO-8859-1");
+					utf8Destino = new String(v.getDestino().getBytes("UTF-8"), "ISO-8859-1");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
-				vuelosAceptados.add(new Vuelo(v.getNumero(),v.getOrigen(),v.getDestino(),v.getPrecio(),v.getFecha(),v.getHora(),v.getIdAvion()));
+				vuelosAceptados.add(new Vuelo(v.getNumero(),utf8Origen,utf8Destino,v.getPrecio(),v.getFecha(),v.getHora(),v.getIdAvion()));
 			}
 		}
 		
